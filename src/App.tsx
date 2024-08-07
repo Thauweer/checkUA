@@ -4,23 +4,25 @@ import './App.css'
 
 function App() {
   const [specs, setSpecs] = useState("");
-  useEffect(()=>{
-    let parser = new UAParser(navigator.userAgent);
-    console.log(parser); 
-    let parserResults = parser.getResult();
+  useEffect(() => {
+    const parser = new UAParser(navigator.userAgent);
+    console.log(parser);
+    const parserResults = parser.getResult();
     setSpecs(JSON.stringify(parserResults, null, 4));
   }, []);
 
-  const onClickCopyText = (containerid:string) => {
-    let textarea = document.createElement('textarea');
-	    textarea.id = 'temp';
-	    textarea.style.height = "0";
-	    document.body.appendChild(textarea);
-	    textarea.value = document.getElementById(containerid).innerText;
-	    let selector = document.querySelector('#temp');
-	    selector.select();
-	    document.execCommand('copy');
-	    document.body.removeChild(textarea);
+  const onClickCopyText = (containerid: string) => {
+    const textarea = document.createElement('textarea');
+    textarea.id = 'temp';
+    textarea.style.height = "0";
+    document.body.appendChild(textarea);
+    // @ts-expect-error may no element
+    textarea.value = document.getElementById(containerid).innerText; 
+    const selector = document.querySelector('#temp');
+    // @ts-expect-error maybe null
+    selector.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
   }
 
   return (
@@ -28,7 +30,7 @@ function App() {
       <pre id='toCopy'>
         {specs}
       </pre>
-      <button onClick={ () => onClickCopyText('toCopy')}>Copy</button>
+      <button onClick={() => onClickCopyText('toCopy')}>Copy</button>
     </>
   )
 }
