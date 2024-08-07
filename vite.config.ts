@@ -7,5 +7,6 @@ export default defineConfig({
   build: {
     outDir: './build',
     emptyOutDir: true, // also necessary
-  }
+  },
+  base: "/checkUA/"
 })
